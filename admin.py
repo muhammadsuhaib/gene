@@ -1,35 +1,104 @@
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
-from django.contrib.auth.models import User
+from . import models
+# Register your models here.
+admin.site.register(models.AffectedDt)
+admin.site.register(models.AgeAtOnsetClassificationDt)
+admin.site.register(models.AgeAtOnsetOfOcularSymptomDt)
+admin.site.register(models.AgeAtTheInitialDiagnosisClassificationDt)
+admin.site.register(models.AgeAtTheInitialDiagnosisDt)
+admin.site.register(models.AgeCategoryDt)
+admin.site.register(models.AgeForSurgeryDt)
+admin.site.register(models.AiDiagnosisForAgeRelatedMacularDegenerationDt)
+admin.site.register(models.AiDiagnosisForCornealDiseasesDt)
+admin.site.register(models.AiDiagnosisForDiabeticRetinopathyDt)
+admin.site.register(models.AiDiagnosisForGlaucomaDt)
+admin.site.register(models.AiDiagnosisForInheritedRetinalDiseasesDt)
+admin.site.register(models.AlleleFrequencyDatabaseDt)
+admin.site.register(models.AxialLengthClassificationDt)
+admin.site.register(models.AxialLengthDt)
+admin.site.register(models.BilateralDt)
+admin.site.register(models.CausCandDt)
+admin.site.register(models.ConsanguineousDt)
+admin.site.register(models.CountryOfOriginDt)
+admin.site.register(models.ElectrophysiologicalFindingsDt)
+admin.site.register(models.EthnicityDt)
+admin.site.register(models.FamilyHistoryDt)
+admin.site.register(models.FluctuationDt)
+admin.site.register(models.FullFieldElectrophysiologicalGroupingDt)
+admin.site.register(models.HcOnMedicationOrNotInsulinDt)
+admin.site.register(models.HcOnMedicationOrNotStatinDt)
+admin.site.register(models.IntraocularPressureClassificationDt)
+admin.site.register(models.IntraocularPressureDt)
+admin.site.register(models.LensDt)
+admin.site.register(models.MultifocalElectrophysiologicalGroupingDt)
+admin.site.register(models.NumberOfAffectedMembersInTheSamePedigreeDt)
+admin.site.register(models.NumberOfSurgeryDt)
+admin.site.register(models.OcularComplicationDt)
+admin.site.register(models.OcularMedicationInternalDt)
+admin.site.register(models.OcularMedicationTopicalDt)
+admin.site.register(models.OcularSurgeriesCataractDt)
+admin.site.register(models.OcularSurgeriesCorneaDt)
+admin.site.register(models.OcularSurgeriesGlaucomaDt)
+admin.site.register(models.OcularSurgeriesLasersDt)
+admin.site.register(models.OcularSurgeriesRetinaDt)
+admin.site.register(models.OcularSurgeriesVitreousInfectionDt)
+admin.site.register(models.OcularSymptomDt)
+admin.site.register(models.OnMedicationOrNotDt)
+admin.site.register(models.OphthalmicMedicationSubtenonOrSubconjunctivalInjectionDt)
+admin.site.register(models.OphthalmologyAgeRelatedMacularDegenerationDt)
+admin.site.register(models.OphthalmologyCataractDt)
+admin.site.register(models.OphthalmologyCornealDiseasesDt)
+admin.site.register(models.OphthalmologyDiableticRetinopathyDt)
+admin.site.register(models.OphthalmologyGlaucomaDt)
+admin.site.register(models.OphthalmologyMyopiaDt)
+admin.site.register(models.OphthalmologyNormalDt)
+admin.site.register(models.OphthalmologyOthersDt)
+admin.site.register(models.OphthalmologyRetinalArteryVeinOcculusionDt)
+admin.site.register(models.OphthalmologyUveitisDt)
+admin.site.register(models.OriginPrefectureInJapanDt)
+admin.site.register(models.PresentUnpresentDt)
+admin.site.register(models.ProgressionDt)
+admin.site.register(models.RefractiveErrorSphericalEquivalentClassificationDt)
+admin.site.register(models.RefractiveErrorSphericalEquivalentDt)
+admin.site.register(models.RelationshipToProbandDt)
+admin.site.register(models.SexDt)
+admin.site.register(models.StaticPerimetryMeanSensitivityClassificationDt)
+admin.site.register(models.StaticPerimetryMeanSensitivityDt)
+admin.site.register(models.SyndromicDt)
+admin.site.register(models.SystemicAbnormalityDt)
+admin.site.register(models.VisualAcuityClassificationDt)
+admin.site.register(models.VisualAcuityDt)
+admin.site.register(models.InstituteDt)
+admin.site.register(models.DiseaseDt)
+admin.site.register(models.SubDiseaseDt)
+admin.site.register(models.InheritanceDt)
+admin.site.register(models.GeneDt)
+admin.site.register(models.MutationDt)
+admin.site.register(models.DnaExtractionInProcessDt)
+admin.site.register(models.SequencingDt)
+admin.site.register(models.AnalysisDt)
+admin.site.register(models.ChromosomeDt)
+admin.site.register(models.ExonDt)
+admin.site.register(models.SequencingStatusDt)
+admin.site.register(models.TypicalDt)
+admin.site.register(models.TypeOldNewDt)
+admin.site.register(models.AdminDiseaseDt)
+admin.site.register(models.AdminSubDiseaseDt)
+admin.site.register(models.DiseaseCausCandGeneDt)
 
-from .models import DoctorDisease,DoctorInstitute,WhichDoctorDocumentCanSee
-
-
-class DoctorDiseaseInline(admin.StackedInline):
-    model = DoctorDisease
-    can_delete = False
-    verbose_name_plural = 'Assigned Diseases'
-    fk_name = 'user'
-	
-class DoctorInstituteInline(admin.StackedInline):
-    model = DoctorInstitute
-    can_delete = False
-    verbose_name_plural = 'Assigned Institute'
-    fk_name = 'user'
-	
-class WhichDoctorDocumentCanSeeInline(admin.StackedInline):
-    model = WhichDoctorDocumentCanSee
-    can_delete = False
-    verbose_name_plural = 'Which doctor documents can see'
-    fk_name = 'user'
-
-
-class CustomUserAdmin(UserAdmin):
-	inlines = (DoctorDiseaseInline,DoctorInstituteInline,WhichDoctorDocumentCanSeeInline, )
-	
-	class Media:
-		css = { "all" : ("admin/admin.css",) }
-
-
-admin.site.unregister(User)
-admin.site.register(User, CustomUserAdmin)
+# admin.site.register(models.PatientGeneralInfo)
+# admin.site.register(models.PatientGeneralInfoFamily)
+# admin.site.register(models.PatientGeneralInfoMultiVisit)
+# admin.site.register(models.PatientGeneralInfoMultiVisitOphthalmologyImages)
+# admin.site.register(models.PatientGeneralInfoMultiVisitOphthalmology)
+# admin.site.register(models.PatientGeneralInfoOphthalmologySystAbnormality)
+# admin.site.register(models.PatientGeneralInfoOphthalmologyOcularCompli)
+# admin.site.register(models.PatientGeneralInfoOphthalmology)
+# admin.site.register(models.PatientOtherMultiVisitImages)
+# admin.site.register(models.PatientCandidateGeneMutationInfo)
+# admin.site.register(models.PatientCausativeGeneInfo)
+# admin.site.register(models.PatientCausativeGeneInfoEthnicity)
+# admin.site.register(models.PatientCausativeGeneInfoLocalPopulation)
+# admin.site.register(models.PatientGeneralInfoMultiVisitOphthalmologyAi)
+# admin.site.register(models.PatientOtherCommonInfo)
+# admin.site.register(models.PatientOtherUncommonInfoOphthalmology)

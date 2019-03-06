@@ -1,0 +1,148 @@
+{% extends 'ophthalmology/base.html' %}
+{% block body %}
+ {% load static %}
+{% load site_tags %}
+<style>
+th.txtFntSze i {
+	font-size: 17px;
+	padding-right: 7px;
+}
+td.text-left.pd_view_pro {
+    padding-left: 30px;
+}
+</style>
+<div class="all-wrapper">
+<div class="albums-container container-fluid">
+     <div class="row">
+		<div class="col-sm-12">
+			<h3>View Profile</h3>
+		</div>
+		<div class="col-sm-12">
+			<div class="box box-warning "> 
+				<div class="row pad">
+					<div class="col-md-12 col-sm-6">	
+						<table class="table table-striped table-responsive" style="margin-top:10px;">
+							<thead>
+								<tr style="background-color:#3c3f44; color:white;">
+									<th colspan="2" style="font-size:14px;">Basic Detail</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td width="15%"  class="txtFntSze">Username:</td>
+									<th  class="text-left txtFntSze">{{ user.username }}</th>
+								</tr>
+								<tr>
+									<td width="15%"  class="txtFntSze">Email:</td>
+									<th  class="text-left txtFntSze">{{ user.email }}</th>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class="box box-warning "> 
+				<div class="row pad">
+					<div class="col-md-12 col-sm-6">	
+						<table class="table table-striped table-responsive" style="margin-top:10px;">
+							<thead>
+								<tr style="background-color:#3c3f44; color:white;">
+									<th colspan="2" style="font-size:14px;">Institude Detail</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% if instituteDetail %}
+									<tr>
+										<td width="15%"  class="txtFntSze">Institude Name:</td>
+										<th  class="text-left txtFntSze">{{ instituteDetail.institute.name }}</th>
+									</tr>
+									<tr>
+										<td width="15%"  class="txtFntSze">Institude ID:</td>
+										<th  class="text-left txtFntSze">{{ instituteDetail.institute.institute_id }}</th>
+									</tr>
+								{% else %}
+									<tr>
+										<td style="text-align:center" class="txtFntSze"><b>Record not found.</b></td>
+									</tr>
+								{% endif %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class="box box-warning "> 
+				<div class="row pad">
+					<div class="col-md-12 col-sm-6">	
+						<table class="table table-striped table-responsive" style="margin-top:10px;">
+							<thead>
+								<tr style="background-color:#3c3f44; color:white;">
+									<th colspan="2" style="font-size:14px;">Assigned Diseases</th>
+								</tr>
+							</thead>
+						</table>
+						<table class="table table-striped table-responsive table_view_pro">
+							<tbody>
+								
+								{% if assignedDiseases %}
+									{% for assignedDisease in assignedDiseases %}
+										{% if assignedDisease.SubDiseases %}
+										<thead>
+											<th  class="text-left txtFntSze"><i class="fa fa-angle-double-right" aria-hidden="true"></i>{{ assignedDisease.name }}</th>
+										</thead>
+											<!-- <tr>
+												<td>
+													<table class="table table-striped table-responsive"> -->
+														{% for subassignedDisease in assignedDisease.SubDiseases %}
+															<tr>
+																<td  class="text-left txtFntSze pd_view_pro">{{ subassignedDisease.name }}</td>
+															</tr>
+														{% endfor %}
+													<!-- </table>
+												</td>
+											</tr> -->
+										{% endif %}
+									{% endfor %}
+								{% else %}
+									<tr>
+										<td style="text-align:center" class="txtFntSze"><b>Record not found.</b></td>
+									</tr>
+								{% endif %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			
+			<div class="box box-warning"> 
+				<div class="row pad">
+					<div class="col-md-12 col-sm-6">	
+						<table class="table table-striped table-responsive" style="margin-top:10px;">
+							<thead>
+								<tr style="background-color:#3c3f44; color:white;">
+									<th colspan="2" style="font-size:14px;">See which doctor's documents</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% if which_doctor_document_can_see %}
+									{% for seeWhichDoctorFile in which_doctor_document_can_see %}
+										<tr>
+											<td width="5%"  class="txtFntSze">{{ forloop.counter }}</td>
+											<th  class="text-left txtFntSze">{{ seeWhichDoctorFile.username }}</th>
+										</tr>
+									{% endfor %}
+								{% else %}
+									<tr>
+										<td style="text-align:center" class="txtFntSze"><b>Record not found.</b></td>
+									</tr>
+								{% endif %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+</div>
+{% endblock %}

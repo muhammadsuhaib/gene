@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}GenEye{% endblock %}</title>
+    {% load static %}
+
+
+<link href='https://fonts.googleapis.com/css?family=Satisfy' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" type="text/css" href="{%  static 'css/font-awesome.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{%  static 'css/bootstrap-datetimepicker.min.css' %}"/>
+<link rel="stylesheet" type="text/css" href="{%  static 'css/bootstrap.min.css' %}"/>
+<link rel="shortcut icon" type="image/png" href="{%  static 'favicon.ico' %}"/>
+<link rel="stylesheet" href="{%  static 'css/jquery.fancybox.css' %}">
+<link rel="stylesheet" type="text/css" href="{%  static 'css/style.css' %}">
+
+<script src="{%  static 'js/jquery.min.js' %}"></script>
+<script src="{%  static 'js/bootstrap.min.js' %}"></script>
+<script src="{%  static 'js/moment.min.js' %}"></script>
+<script src="{%  static 'js/bootstrap-datetimepicker.min.js' %}"></script>
+<script src="{%  static 'js/jquery.fancybox.js' %}"></script>
+<script src="{%  static 'js/bootbox.js' %}"></script>
+<script src="{%  static 'js/bootbox.min.js' %}"></script>
+
+
+</head>
+<body>
+<nav class="navbar top-nav">
+
+    <div class="top-nav-inner">
+        <!-- Header -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#topNavBar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" style="padding: 6px 15px;" href=""><img src="{{ '/media/' }}logoNewGene.png" style="height: 40px;margin-right: 10px;display: inline-block;" alt="Logo">GenEye</a>
+        </div>
+
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <span class="glyphicon glyphicon-user"></span>&nbsp;
+                        <strong>{{user.username}}</strong>
+                        <span class="glyphicon glyphicon-chevron-down"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{% url 'ophthalmology:view_profile' %}"><span class="fa fa-cog" aria-hidden="true"></span>&nbsp; View Profile</a></li>
+                        <li class="divider"></li>
+                        <li><a href=""><span class="fa fa-wrench" aria-hidden="true"></span>&nbsp; Change Password</a></li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="{% url 'account:logout_user' %}">
+                                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>&nbsp; Logout
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<nav class="navbar fixed-side">
+    <div class="">
+        <!-- Items -->
+        <div class="collapse navbar-collapse" id="topNavBar">
+            <ul class="nav navbar-nav navbar-right">
+				<li><a href="{% url 'ophthalmology:index' %}"> <span class="fa fa-angle-double-right"></span> &nbsp;Dashboard</a></li>
+				{% if assignedDiseases %}
+					{% for result in assignedDiseases %}
+						{% if result.SubDiseases%}
+							<li class="child-menu">
+								<a href="javascript:void(0)"> <span class="fa fa-angle-double-right"></span> &nbsp;{{result.name}}</a>
+								<ul style="display: none;">
+									{% for subResult in result.SubDiseases %}
+										<li>
+											<a href="{% url 'ophthalmology:add_new_patient' subResult.id  %}">{{subResult.name}}</a>
+										</li>
+									{% endfor %}
+								</ul>
+							</li>
+						{% endif %}
+					{% endfor %}
+				{% endif %}
+
+            </ul>
+        </div>
+    </div>
+</nav>
+<div id="loader_img" style="display:none">
+							<center> </center>
+						</div>
+<a href="javascript:" id="return-to-top">
+  <i class="fa fa-chevron-up"></i>
+</a>
+
+<link rel="stylesheet" href="{% static 'admin/js/notification/jquery.toastmessage.css' %}">
+  <script src="{% static 'admin/js/notification/jquery.toastmessage.js' %}"></script>
+<script>
+	function show_message(message,message_type) {
+		$().toastmessage('showToast', {
+			text: message,
+			sticky: false,
+			stayTime : 8000,
+			position: 'top-right',
+			type: message_type,
+		});
+	}
+
+    $(document).ready(function(){
+        $("#topNavBar .navbar-nav>li>a").click(function(){
+            $(this).toggleClass("active");
+            $(this).next("ul").slideToggle();
+        });
+        setTimeout(function() {
+            $("#topNavBar .navbar-nav>li:nth-child(2)>a").trigger('click');
+        });
+
+        // ===== Scroll to Top ====
+        $(window).scroll(function() {
+            if ($(this).scrollTop() >= 50) {        // If page is scrolled more than 50px
+                $('#return-to-top').fadeIn(200);    // Fade in the arrow
+            } else {
+                $('#return-to-top').fadeOut(200);   // Else fade out the arrow
+            }
+        });
+        $('#return-to-top').click(function() {      // When arrow is clicked
+            $('body,html').animate({
+                scrollTop : 0                       // Scroll to top of body
+            }, 500);
+        });
+    });
+</script>
+{% if messages %}
+	{% for message in messages %}
+		{% if message.tags %}
+			<script>
+				show_message("{{message}}","success");
+			</script>
+		{% endif %}
+	{% endfor %}
+{% endif %}
+
+{% block body %}
+{% endblock %}
+</body>
+</html>

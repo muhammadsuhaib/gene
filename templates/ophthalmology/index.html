@@ -1,0 +1,862 @@
+{% extends 'ophthalmology/base.html' %}
+{% block body %}
+ {% load static %}
+{% load site_tags %}
+<style>
+	.all_form_inner .form-group>label {
+	display: inline-block;
+	font-size: 12px;
+	font-weight: 500;
+	color: #000018;
+	margin-bottom: 10px;
+	}
+	.form-group.all_from_input input {
+	width: calc(100% - 220px);
+	display: inline-block;
+	background: transparent;
+	height: 40px;
+	border: 1px solid #aeaeae;
+	color: #000;
+	}
+	.form-group.all_from_input label {
+	font-weight: 500;
+	color: #000;
+	text-align: right;
+	width: 150px;
+	vertical-align: middle;
+	padding-right: 15px;
+	}
+	.default-file-upload input {
+	padding: 8px;
+	}
+	.form-group.all_from_input input::-webkit-input-placeholder {
+	color: #aeaeae;
+	font-size: 14px;
+	}
+	.form-group.all_from_input input::-moz-placeholder {
+	color: #aeaeae;
+	font-size: 14px;
+	}
+	.form-group.all_from_input input:-ms-input-placeholder {
+	color: #aeaeae;
+	font-size: 14px;
+	}
+	.form-group.all_from_input input:-moz-placeholder {
+	color: #aeaeae;
+	font-size: 14px;
+	}
+	.add_another_modual a {
+	color: #aaaaaa;
+	font-size: 15px;
+	width: calc(100% - 190px);
+	display: inline-block;
+	text-align: left;
+	margin: 0;
+	float: right;
+	}
+	.add_another_modual {
+	display: inline-block;
+	width: 100%;
+	}
+	/*.form-group.all_from_input .selectdiv:after {
+	position: absolute;
+	content: "\f107";
+	right: 20px;
+	top: 5px;
+	font-size: 25px;
+	color: #aaaaaa;
+	font-family: 'fontawesome';
+	}*/
+	.form-group.all_from_input .selectdiv {
+	width: calc(100% - 220px);
+	display: inline-block;
+	background: transparent;
+	height: 40px;
+	color: #000;
+	position: relative;
+	}
+	.form-group.all_from_input select {
+	background: transparent;
+	border: 1px solid #aeaeae;
+	color: #aeaeae;
+	font-size: 14px;
+	}
+	.add_another_modual a .fa {
+	padding-right: 5px;
+	}
+	.all-bottom-border {
+	border-bottom: 1px solid #eaeaea;
+	width: 100%;
+	display: inline-block;
+	margin: 20px 0;
+	}
+	.pt-15{
+	padding-top:15px;
+	}
+	.bottom_next_prev {
+		width: 100%;
+		display: inline-block;
+		margin: 20px 0 40px;
+	}
+	.bottom_next_prev li {
+		display: inline-block;
+		float: left;
+	}
+	.bottom_next_prev li a{
+		border: 2px solid #194f90;
+		padding: 7px 15px;
+		font-size: 14px;
+		color: #000;
+		font-weight: 500;
+	}
+	.bottom_next_prev li.back_btn {
+		width: 25%;
+	}
+	.bottom_next_prev li.save_submit_btn {
+		width: 50%;
+	}
+	.bottom_next_prev li.next_btn {
+		width: 25%;
+	}
+	/*-- step --*/
+	.wizard {
+		/*margin: 0 auto 30px;*/
+		background: #fff;
+		width: 100%;
+		/* border: 1px solid #f1f0f0; */
+		border-top: 0;
+	}
+
+		.wizard .nav-tabs {
+			position: relative;
+			margin: 0 auto;
+			margin-bottom: 0;
+			border-bottom: 0;
+		}
+
+		.wizard > div.wizard-inner {
+			position: relative;
+		}
+
+	.connecting-line {
+		/* height: 2px;
+		background: #e0e0e0;
+		position: absolute;
+		width: 80%;
+		margin: 0 auto;
+		left: 0;
+		right: 0;
+		top: 50%;
+		z-index: 1; */
+		height: 2px;
+		background: #e0e0e0;
+		position: absolute;
+		width: 80%;
+		margin: 0 auto;
+		left: 0;
+		right: 0;
+		z-index: 1;
+		top: 45px;
+	}
+
+	.wizard .nav-tabs > li.active > a, .wizard .nav-tabs > li.active > a:hover, .wizard .nav-tabs > li.active > a:focus {
+		color: #555555;
+		border: 0;
+		border-bottom-color: transparent;
+	}
+
+	span.round-tab {
+		width: 40px;
+		height: 40px;
+		line-height: 40px;
+		display: inline-block;
+		border-radius: 100px;
+		background: #194f90;
+		border: 2px solid #194f90;
+		z-index: 2;
+		position: absolute;
+		left: 0;
+		text-align: center;
+		font-size: 19px;
+		color:#fff;
+	}
+	span.round-tab i{
+		color:#555555;
+	}
+	.wizard li.active span.round-tab {
+		background: #fff;
+		border: 2px solid #2a9d0e;
+		background-color: #2a9d0e;
+		color: #fff;
+
+	}
+
+
+	.wizard .nav-tabs > li {
+		width: 20%;
+	}
+
+	.wizard li:after {
+		content: " ";
+		position: absolute;
+		left: 46%;
+		opacity: 0;
+		margin: 0 auto;
+		bottom: 0px;
+		border: 5px solid transparent;
+		border-bottom-color: #5bc0de;
+		transition: 0.1s ease-in-out;
+	}
+
+	/* .wizard li.active:after {
+		content: " ";
+		position: absolute;
+		left: 46%;
+		opacity: 1;
+		margin: 0 auto;
+		bottom: 0px;
+		border: 10px solid transparent;
+		border-bottom-color: #5bc0de;
+	} */
+
+	.wizard .nav-tabs > li a {
+		width: 40px;
+		height: 40px;
+		margin: 20px auto;
+		border-radius: 100%;
+		padding: 0;
+	}
+
+		.wizard .nav-tabs > li a:hover {
+			background: transparent;
+		}
+
+	.wizard .tab-pane {
+		position: relative;
+		padding-top: 50px;
+	}
+
+	.wizard h3 {
+		margin-top: 0;
+	}
+	.page-titlewrapper{
+		background-color: #fff;
+		position: relative;
+	}
+
+	.page-all-title{
+		display: table;
+		width: 100%;
+		height: 150px;
+	}
+	.page-all-title h1 {
+		display: table-cell;
+		vertical-align: middle;
+		text-align: center;
+		font-size: 43px;
+		text-transform: none;
+		margin: 0 auto;
+		color: #194f90;
+		font-weight: 600;
+		font-family: Roboto;
+	}
+	.wizard .nav-tabs > li p{
+		color: #000;
+		font-size: 13px;
+		width: 170px;
+		margin: 0 auto;
+	}
+
+	canvas {
+		cursor: pointer;
+	}
+
+	.grap_modal_body{
+		height: 500px;
+		overflow-y: auto;
+	}
+</style>
+<script src="{%  static 'chartJs/Chart.js' %}"></script>
+<script src="{%  static 'd3/d3.v3.min.js' %}"></script>
+<script src="{%  static 'd3/d3.tip.v0.6.3.js' %}"></script>
+<link rel="stylesheet" type="text/css" href="{%  static 'd3/d3.css' %}">
+
+<div class="all-wrapper">
+<div class="albums-container container-fluid">
+     <div class="row">
+		<div class="col-sm-12">
+			<h3>List Of Patients</h3>
+
+		</div>
+		<div class="col-sm-12">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="row pad" style="display: none;">
+						<div class="col-md-6 col-sm-6" >
+							<a  href="{% url 'ophthalmology:delete_all_patient_data' %}" class="btn btn-danger">Delete All</a>
+						</div>
+					</div>
+
+					<div class="row pad">
+						{% if CountryOfOriginDtGraph %}
+						<div class="col-md-6 col-sm-6" >
+							<div class="box box-info">
+								<div id="info1"></div>
+								<div class="box-header with-border">
+									<h3 class="box-title">
+										<i class="fa fa-university"></i>
+										Patient In Country
+									</h3>
+								</div>
+								<div class="box-body" style="display: block;padding:15px;">
+									<div>
+										<div style="max-height:150px;overflow:auto;margin-bottom: 10px;">
+											<div class="mainLabelCol">
+												{% for result1 in CountryOfOriginDtGraph %}
+													<div class="mainLabelColPrnt">
+														<span style="background-color:{{result1.color}}" class="labelCol">&nbsp;</span>
+														<label class="lableColLab">{{result1.name}}: {{result1.count}}%</label>
+													</div>
+												{% endfor %}
+											</div>
+										</div>
+										<div class="clearfix"></div>
+										<canvas id="countries" style="height:100%;width:100%;"></canvas>
+									</div>
+								</div>
+							</div>
+						</div>
+						{% endif %}
+					{% if Institudes %}
+						<div class="col-md-6 col-sm-6" >
+							<div class="box box-info">
+								<div id="info1"></div>
+								<div class="box-header with-border">
+									<h3 class="box-title">
+										<i class="fa fa-university"></i>
+										Patient In Institute
+									</h3>
+								</div>
+								<div class="box-body" style="display: block;padding:15px;">
+									<div>
+										<div style="max-height:150px;overflow:auto;margin-bottom: 10px;">
+											<div class="mainLabelCol">
+												{% for result in Institudes %}
+														<div class="mainLabelColPrnt">
+															<span style="background-color:{{result.color}}" class="labelCol">&nbsp;</span>
+															<label class="lableColLab">{{result.name}}: {{result.count}}%</label>
+														</div>
+												{% endfor %}
+											</div>
+										</div>
+										<div class="clearfix"></div>
+										<canvas id="institute" style="height:100%;width:100%;"></canvas>
+									</div>
+								</div>
+							</div>
+						</div>
+					{% endif %}
+
+				</div>
+					<div class="row pad">
+
+					{% if DiseaseDts %}
+						<div class="col-md-6 col-sm-6" >
+							<div class="box box-info">
+								<div id="info1"></div>
+								<div class="box-header with-border">
+									<h3 class="box-title">
+										<i class="fa fa-user "></i>
+										Patient in Disease
+									</h3>
+								</div>
+								<div class="box-body" style="display: block;padding:15px;">
+									<div>
+										<div style="max-height:150px;overflow:auto;margin-bottom: 10px;">
+											<div class="mainLabelCol">
+												{% for result in DiseaseDts %}
+													<div class="mainLabelColPrnt">
+														<span style="background-color:{{result.color}}" class="labelCol">&nbsp;</span>
+														<label class="lableColLab">{{result.name}}: {{result.count}}%</label>
+													</div>
+												{% endfor %}
+											</div>
+										</div>
+										<div class="clearfix"></div>
+										<canvas id="patientDisease" style="height:100%;width:100%;"></canvas>
+									</div>
+								</div>
+							</div>
+						</div>
+					{% endif %}
+						<div class="col-md-6 col-sm-6" >
+							<div class="box box-info">
+								<div id="info1"></div>
+								<div class="box-header with-border">
+									<h3 class="box-title">
+										<i class="fa fa-university"></i>
+										Patient In Gene
+									</h3>
+								</div>
+								<div class="box-body" style="display: block;padding:15px;">
+									<div>
+										<div style="max-height:150px;overflow:auto;margin-bottom: 10px;">
+											<div class="mainLabelCol">
+												<div class="mainLabelColPrnt">
+													<span style="background-color:#1f77b4" class="labelCol">&nbsp;</span>
+													<label class="lableColLab">Gene: 100%</label>
+												</div>
+											</div>
+										</div>
+										<div class="clearfix"></div>
+										<canvas id="geneType" style="height:100%;width:100%;"></canvas>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					 <!-- Modal -->
+					  <div class="modal fade" id="grapDataModal" role="dialog">
+						<div class="modal-dialog">
+						  <!-- Modal content-->
+						  <div class="modal-content">
+							<div class="modal-header">
+							  <button type="button" class="close" data-dismiss="modal">&times;</button>
+							  <h4 class="grap_modal_title"></h4>
+							</div>
+							<div class="grap_modal_body"></div>
+							<div class="modal-footer">
+							  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							</div>
+						  </div>
+
+						</div>
+					  </div>
+
+
+
+				<script>
+
+				{% if DiseaseDts %}
+					 var pieData3 = [
+						{% for result1 in DiseaseDts %}
+							{
+								value: '{{result1.count}}',
+								color:"{{result1.color}}",
+								label:"{{result1.name}}",
+							},
+						{% endfor %}
+					];
+					// Get the context of the canvas element we want to select
+					var patientDisease= document.getElementById("patientDisease");
+					var pdxP = patientDisease.getContext('2d');
+					var mypdPieChart = new Chart(pdxP).Pie(pieData3);
+
+					patientDisease.onclick = function(evt) {
+					   var elementPd = mypdPieChart.getSegmentsAtEvent(evt);
+					   if (!elementPd.length) return; // return if not clicked on slice
+					   var labelPd = elementPd[0].label;
+						if(labelPd != ''){
+							$('#loader_img').show();
+							$.ajax({
+								url: '{% url "ophthalmology:get_sub_disease_data_on_grap" %}',
+								data: {
+								  'disease_name':labelPd
+								},
+								success: function (r) {
+									$('#loader_img').hide();
+									$('.grap_modal_title').html('');
+									$('.grap_modal_title').html('Patient In '+labelPd);
+									$('.grap_modal_body').html('');
+									$('.grap_modal_body').html(r);
+									openTestModal();
+								}
+						  });
+						}
+
+					}
+				{% endif %}
+
+				{% if Institudes %}
+					 var pieData = [
+						{% for result in Institudes %}
+							{
+								value: '{{result.count}}',
+								color:"{{result.color}}",
+								label:"{{result.name}}",
+								data:"3333"
+							},
+						{% endfor %}
+
+					];
+					// Get the context of the canvas element we want to select
+					//var countries= document.getElementById("countries").getContext("2d");
+
+					var institute = document.getElementById("institute");
+					var ctxP = institute.getContext('2d');
+					var myPieChart = new Chart(ctxP).Pie(pieData);
+
+					institute.onclick = function(evt) {
+					   var element = myPieChart.getSegmentsAtEvent(evt);
+					   if (!element.length) return; // return if not clicked on slice
+					   var label = element[0].label;
+						if(label != ''){
+							$('#loader_img').show();
+							$.ajax({
+								url: '{% url "ophthalmology:get_institude_data_on_grap" %}',
+								data: {
+								  'institude_name':label
+								},
+								success: function (r) {
+									$('#loader_img').hide();
+									$('.grap_modal_title').html('');
+									$('.grap_modal_title').html('Patient In '+label);
+									$('.grap_modal_body').html('');
+									$('.grap_modal_body').html(r);
+									openTestModal();
+								}
+						  });
+						}
+
+					}
+
+				{% endif %}
+
+				function openTestModal(){
+					$('#grapDataModal').modal({
+
+					});
+				}
+
+
+
+
+				{% if CountryOfOriginDtGraph %}
+					 var pieData123 = [
+						{% for result222 in CountryOfOriginDtGraph %}
+							{
+								value: '{{result222.count}}',
+								color: "{{result222.color}}",
+								label: '{{result222.name}}'
+							},
+						{% endfor %}
+					];
+
+					// Get the context of the canvas element we want to select
+					var countries= document.getElementById("countries").getContext("2d");
+					new Chart(countries).Pie(pieData123);
+				{% endif %}
+
+
+
+
+
+
+
+
+					 var pieData1 = [
+							{
+								value: '100',
+								color:"#1f77b4",
+								label:"Gene"
+							},
+					];
+					// Get the context of the canvas element we want to select
+					var geneType= document.getElementById("geneType").getContext("2d");
+					new Chart(geneType).Pie(pieData1);
+
+					 var pieData1 = [
+							{
+								value: '100',
+								color:"#d62728",
+								label:"Gene"
+							},
+					];
+
+
+
+
+				$('#grapDataModal').on('hidden.bs.modal', function () {
+					var modal = $(this);
+					var canvas = modal.find('.modal-body canvas');
+					canvas.attr('width','568px').attr('height','300px');
+					// destroy modal
+					$(this).data('bs.modal', null);
+				})
+
+				</script>
+				<hr>
+				<div class="row pad">
+					<!-- Third Graph-->
+					<div class="col-md-12 col-sm-12" >
+						<div class="box box-info">
+							<div id="info1"></div>
+							<div class="box-header with-border">
+								<h3 class="box-title"><i class="fa fa-building-o "></i>
+									Patient Summary</h3>
+								<div class="box-tools pull-right">
+									<button class="btn btn-box-tool" data-widget="collapse" type="button">
+										<i class="fa fa-minus"></i>
+									</button>
+									<button class="btn btn-box-tool" data-widget="remove" type="button">
+										<i class="fa fa-times"></i>
+									</button>
+								</div>
+							</div>
+							<div class="box-body" style="display: block;padding:15px;">
+								<div id="newUserChart" style="overflow:auto;">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<hr>
+					<div class="table-responsive">
+						<table class="table dashboard_table">
+							<thead>
+								<tr>
+									<th>Registration ID</th>
+									{% if family_id == 0%}
+										<th>Family ID</th>
+									{% endif%}
+									{% if institute_id == 0%}
+										<th>Institute ID</th>
+									{% endif%}
+									<!--<th>Patient ID</th>-->
+									<th>Sample ID</th>
+									<th>Status</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% if PatientGeneralInfoDetial %}
+									{% for result in PatientGeneralInfoDetial %}
+										<tr>
+											<td><a href="{% url 'ophthalmology:view_new_patient' result.id %}">{{result.registration_id}}</a></td>
+											{% if family_id == 0%}
+												<td><a href="?family_id={{ result.family_id }}">{{result.family_id}}</a></td>
+											{% endif %}
+											{% if institute_id == 0%}
+												<td><a href="?institute_id={{ result.institute.id }}">{{result.institute.institute_id}}</a></td>
+											{% endif %}
+											<td>{{result.sample_id}}</td>
+											<td>
+												{% if result.is_draft == True %}
+													<span class="label label-success">Live</span>
+												{% else %}
+													<span class="label label-warning">In Draft</span>
+												{% endif %}
+											</td>
+											<td>
+												{% if user.is_superuser or user.id == result.user_id %}
+													<a  href="{% url 'ophthalmology:edit_new_patient' result.id %}" class="btn btn-info">Edit</a>
+													<a  href="{% url 'ophthalmology:delete_patient' result.id %}" onclick="my_function({{result.id}});" class="btn btn-danger delete_any_item">Delete</a>
+													{% if result.is_draft == True %}
+														<a  href="{% url 'ophthalmology:change_status' result.id '0' %}"  class="btn btn-warning status_any_item" >Send to draft</a>
+													{% else %}
+														<a  href="{% url 'ophthalmology:change_status' result.id '1' %}"  class="btn btn-success status_any_item">Make Live</a>
+													{% endif %}
+													<a  href="{% url 'ophthalmology:export_patient' result.id %}" class="btn btn-info">Export</a>
+													<!--<a  href="{% url 'ophthalmology:export_patient_new' result.id %}" class="btn btn-info">Export New</a>-->
+												{% endif %}
+
+
+
+											</td>
+										</tr>
+									{% endfor %}
+								{% else %}
+									<tr>
+										<td colspan="4" style="text-align:center">Record not found.</td>
+									</tr>
+								{% endif %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+</div>
+<script>
+	var margin = {top: 20, right: 20, bottom: 30, left: 40},
+	width = 1050 - margin.left-60 - margin.right,
+	height = 400 - margin.top - margin.bottom;
+</script>
+<style>
+
+
+path {
+  stroke: steelblue;
+  stroke-width: 2;
+  fill: none;
+}
+
+.axis path,
+.axis line {
+	fill: none;
+	stroke: grey;
+	stroke-width: 1;
+	shape-rendering: crispEdges;
+}
+
+	.info-box-text {
+		font-size: 12px !important;
+	}
+	.toolTip {
+		font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+		position: absolute;
+		display: none;
+		width: auto;
+		height: auto;
+		background: none repeat scroll 0 0 white;
+		border: 0 none;
+		border-radius: 8px 8px 8px 8px;
+		box-shadow: -3px 3px 15px #888888;
+		color: black;
+		font: 15px sans-serif;
+		padding: 5px;
+		text-align: center;
+	}
+</style>
+<style>
+	.mainLabelCol {
+		min-height: 75px;
+	}
+	.mainLabelColPrnt {
+		display: inline-block;
+		min-width: 156px;
+	}
+	.mainLabelColPrntS {
+		display: inline-block;
+		min-width: 143px;
+	}
+	.labelCol {
+		display: inline-block;
+		width: 25px;
+		height: 16px;
+	}
+	.lableColLab{
+		position: relative;
+		top: -2px;
+		left: 3px;
+		margin-right: 8px;
+	}
+	.info-box-text {
+		font-size: 12px !important;
+	}
+	.toolTip {
+		font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+		position: absolute;
+		display: none;
+		width: auto;
+		height: auto;
+		background: none repeat scroll 0 0 white;
+		border: 0 none;
+		border-radius: 8px 8px 8px 8px;
+		box-shadow: -3px 3px 15px #888888;
+		color: black;
+		font: 15px sans-serif;
+		padding: 5px;
+		text-align: center;
+	}
+</style>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script>
+
+// set the dimensions and margins of the graph
+var margin = {top: 20, right: 20, bottom: 30, left: 50},
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+// parse the date / time
+var parseTime = d3.timeParse("%Y-%m");
+
+// set the ranges
+var x = d3.scaleTime().range([0, width]);
+var y = d3.scaleLinear().range([height, 0]);
+
+// define the line
+var valueline = d3.line()
+    .x(function(d) { return x(d.label); })
+    .y(function(d) { return y(d.Patient); });
+
+// append the svg obgect to the body of the page
+// appends a 'group' element to 'svg'
+// moves the 'group' element to the top left margin
+var svg = d3.select("#newUserChart").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
+
+
+
+
+	data = [
+	{% if yearData %}
+									{% for result in yearData %}
+				 {label:"{{result}}","Patient":"{{yearData|get_item:result}}"},
+				{% endfor %}
+								{% endif %}
+	];
+
+
+
+	data.forEach(function(d) {
+      d.label = parseTime(d.label);
+      d.Patient = +d.Patient;
+	});
+
+  // Scale the range of the data
+  x.domain(d3.extent(data, function(d) { return d.label; }));
+  y.domain([0, d3.max(data, function(d) { return d.Patient; })]);
+
+  // Add the valueline path.
+  svg.append("path")
+      .data([data])
+      .attr("class", "line")
+      .attr("d", valueline);
+
+  // Add the X Axis
+  svg.append("g")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x));
+
+  // Add the Y Axis
+  svg.append("g")
+      .call(d3.axisLeft(y));
+
+
+
+</script>
+
+<script>
+$(document).on('click', '.delete_any_item', function(e){
+	e.stopImmediatePropagation();
+	url = $(this).attr('href');
+	bootbox.confirm("Are you sure want to delete this ?",
+	function(result){
+		if(result){
+			window.location.replace(url);
+		}
+	});
+	e.preventDefault();
+});
+$(document).on('click', '.status_any_item', function(e){
+	e.stopImmediatePropagation();
+	url = $(this).attr('href');
+	bootbox.confirm("Are you sure want to change status ?",
+	function(result){
+		if(result){
+			window.location.replace(url);
+		}
+	});
+	e.preventDefault();
+});
+</script>
+{% endblock %}

@@ -1,0 +1,325 @@
+{% extends 'ophthalmology/base.html' %}
+{% block body %}
+ {% load static %}
+{% load site_tags %}
+<style>
+	.all_form_inner .form-group>label {
+	display: inline-block;
+	font-size: 12px;
+	font-weight: 500;
+	color: #000018;
+	margin-bottom: 10px;
+	}
+	.form-group.all_from_input input {
+	width: calc(100% - 220px);
+	display: inline-block;
+	background: transparent;
+	height: 40px;
+	border: 1px solid #aeaeae;
+	color: #000;
+	}
+	.form-group.all_from_input label {
+	font-weight: 500;
+	color: #000;
+	text-align: right;
+	width: 150px;
+	vertical-align: middle;
+	padding-right: 15px;
+	}
+	.default-file-upload input {
+	padding: 8px;
+	}
+	.form-group.all_from_input input::-webkit-input-placeholder {
+	color: #aeaeae;
+	font-size: 14px;
+	}
+	.form-group.all_from_input input::-moz-placeholder {
+	color: #aeaeae;
+	font-size: 14px;
+	}
+	.form-group.all_from_input input:-ms-input-placeholder {
+	color: #aeaeae;
+	font-size: 14px;
+	}
+	.form-group.all_from_input input:-moz-placeholder {
+	color: #aeaeae;
+	font-size: 14px;
+	}
+	.add_another_modual a {
+	color: #aaaaaa;
+	font-size: 15px;
+	width: calc(100% - 190px);
+	display: inline-block;
+	text-align: left;
+	margin: 0;
+	float: right;
+	}
+	.add_another_modual {
+	display: inline-block;
+	width: 100%;
+	}
+	/*.form-group.all_from_input .selectdiv:after {
+	position: absolute;
+	content: "\f107";
+	right: 20px;
+	top: 5px;
+	font-size: 25px;
+	color: #aaaaaa;
+	font-family: 'fontawesome';
+	}*/
+	.form-group.all_from_input .selectdiv {
+	width: calc(100% - 220px);
+	display: inline-block;
+	background: transparent;
+	height: 40px;
+	color: #000;
+	position: relative;
+	}
+	.form-group.all_from_input select {
+	background: transparent;
+	border: 1px solid #aeaeae;
+	color: #aeaeae;
+	font-size: 14px;
+	}
+	.add_another_modual a .fa {
+	padding-right: 5px;
+	}
+	.all-bottom-border {
+	border-bottom: 1px solid #eaeaea;
+	width: 100%;
+	display: inline-block;
+	margin: 20px 0;
+	}
+	.pt-15{
+	padding-top:15px;
+	}
+	.bottom_next_prev {
+		width: 100%;
+		display: inline-block;
+		margin: 20px 0 40px;
+	}
+	.bottom_next_prev li {
+		display: inline-block;
+		float: left;
+	}
+	.bottom_next_prev li a{
+		border: 2px solid #194f90;
+		padding: 7px 15px;
+		font-size: 14px;
+		color: #000;
+		font-weight: 500;
+	}
+	.bottom_next_prev li.back_btn {
+		width: 25%;
+	}
+	.bottom_next_prev li.save_submit_btn {
+		width: 50%;
+	}
+	.bottom_next_prev li.next_btn {
+		width: 25%;
+	}
+	/*-- step --*/
+	.wizard {
+		/*margin: 0 auto 30px;*/
+		background: #fff;
+		width: 100%;
+		/* border: 1px solid #f1f0f0; */
+		border-top: 0;
+	}
+
+		.wizard .nav-tabs {
+			position: relative;
+			margin: 0 auto;
+			margin-bottom: 0;
+			border-bottom: 0;
+		}
+
+		.wizard > div.wizard-inner {
+			position: relative;
+		}
+
+	.connecting-line {
+		/* height: 2px;
+		background: #e0e0e0;
+		position: absolute;
+		width: 80%;
+		margin: 0 auto;
+		left: 0;
+		right: 0;
+		top: 50%;
+		z-index: 1; */
+		height: 2px;
+		background: #e0e0e0;
+		position: absolute;
+		width: 80%;
+		margin: 0 auto;
+		left: 0;
+		right: 0;
+		z-index: 1;
+		top: 45px;
+	}
+
+	.wizard .nav-tabs > li.active > a, .wizard .nav-tabs > li.active > a:hover, .wizard .nav-tabs > li.active > a:focus {
+		color: #555555;
+		border: 0;
+		border-bottom-color: transparent;
+	}
+
+	span.round-tab {
+		width: 40px;
+		height: 40px;
+		line-height: 40px;
+		display: inline-block;
+		border-radius: 100px;
+		background: #194f90;
+		border: 2px solid #194f90;
+		z-index: 2;
+		position: absolute;
+		left: 0;
+		text-align: center;
+		font-size: 19px;
+		color:#fff;
+	}
+	span.round-tab i{
+		color:#555555;
+	}
+	.wizard li.active span.round-tab {
+		background: #fff;
+		border: 2px solid #2a9d0e;
+		background-color: #2a9d0e;
+		color: #fff;
+		
+	}
+
+
+	.wizard .nav-tabs > li {
+		width: 20%;
+	}
+
+	.wizard li:after {
+		content: " ";
+		position: absolute;
+		left: 46%;
+		opacity: 0;
+		margin: 0 auto;
+		bottom: 0px;
+		border: 5px solid transparent;
+		border-bottom-color: #5bc0de;
+		transition: 0.1s ease-in-out;
+	}
+
+	/* .wizard li.active:after {
+		content: " ";
+		position: absolute;
+		left: 46%;
+		opacity: 1;
+		margin: 0 auto;
+		bottom: 0px;
+		border: 10px solid transparent;
+		border-bottom-color: #5bc0de;
+	} */
+
+	.wizard .nav-tabs > li a {
+		width: 40px;
+		height: 40px;
+		margin: 20px auto;
+		border-radius: 100%;
+		padding: 0;
+	}
+
+		.wizard .nav-tabs > li a:hover {
+			background: transparent;
+		}
+
+	.wizard .tab-pane {
+		position: relative;
+		padding-top: 50px;
+	}
+
+	.wizard h3 {
+		margin-top: 0;
+	} 
+	.page-titlewrapper{
+		background-color: #fff;
+		position: relative;
+	}
+
+	.page-all-title{
+		display: table;
+		width: 100%;
+		height: 150px;
+	}
+	.page-all-title h1 {
+		display: table-cell;
+		vertical-align: middle;
+		text-align: center;
+		font-size: 43px;
+		text-transform: none;
+		margin: 0 auto;
+		color: #194f90;
+		font-weight: 600;
+		font-family: Roboto;
+	}
+	.wizard .nav-tabs > li p{
+		color: #000; 
+		font-size: 13px; 
+		width: 170px;
+		margin: 0 auto;
+	}
+</style>
+<form method="POST" id="dropdown_data_form" autocomplete="off" action="{% url 'ophthalmology:import_dropdown'%}" enctype="multipart/form-data">
+	{% csrf_token %}
+<div class="all-wrapper">
+<div class="albums-container container-fluid">
+     <div class="row">
+		<div class="col-sm-12">
+			<h3>Import Dropdown</h3>
+		</div>
+		<div class="col-sm-12">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="row pad" style="float:right;">
+						<a  href="{% static 'csv/sampleData.csv' %}" class="btn btn-warning" download>Download CSV</a>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="all-form-group">
+								<div class="form-group all_from_input">	
+									<label>Modal Name*</span></label>
+									<input type="text" class="form-control" name="modal_name" placeholder="Enter modal name" id="modal_name"/>
+								</div>
+								<div class="form-group all_from_input">	
+									<label>Table Name*</span></label>
+									<input type="text" class="form-control" name="table_name" placeholder="Enter table name" id="table_name"/>
+								</div>
+								<div class="form-group all_from_input">	
+									<label>File*</span></label>
+									<input type="file" class="form-control" name="import_file" id="import_file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
+									<div class="error-message help-inline"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="all-form-group">
+								<div class="form-group all_from_input">	
+									<a id="submit_form" href="javascript:void(0)" class="btn btn-info">SAVE</a> 
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+</div>
+</form>
+<script>
+	$("#submit_form").click(function(){
+		$("#dropdown_data_form").submit();
+	});
+</script>
+{% endblock %}

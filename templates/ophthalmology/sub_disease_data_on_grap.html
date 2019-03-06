@@ -1,0 +1,103 @@
+ 
+
+
+<div class="panel-body">
+	<div class="row pad">
+		{% if SubDiseaseDts %}
+		<div class="col-md-12 col-sm-12" >	
+			<div class="box box-info">
+				<div id="info1"></div>
+				<div class="box-header with-border">
+					<h3 class="box-title">
+						<i class="fa fa-university"></i>
+						Patient In Sub Disease
+					</h3>
+				</div>
+				<div class="box-body" style="display: block;padding:15px;">  
+					<div>
+						<div style="max-height:150px;overflow:auto;">
+							<div class="mainLabelCol">
+								{% for result1 in SubDiseaseDts %} 
+									<div class="mainLabelColPrnt">
+										<span style="background-color:{{result1.color}}" class="labelCol">&nbsp;</span>
+										<label class="lableColLab">{{result1.name}}: {{result1.count}}%</label>
+									</div>
+								{% endfor %}
+							</div>
+						</div>
+						<div class="clearfix"></div>
+						<canvas id="subDisease222" style="height:100%;width:100%;"></canvas>
+					</div>
+				</div>
+			</div>
+		</div>
+		{% endif %}
+		<script>
+		
+		$('#grapDataModal').one('shown.bs.modal', function (e) {
+				
+				 {% if SubDiseaseDts %}
+				 var pieData123 = [
+					{% for result222 in SubDiseaseDts %} 
+						{
+							value: '{{result222.count}}',
+							color: "{{result222.color}}",
+							label: '{{result222.name}}'
+						},
+					{% endfor %}
+				];
+				{% endif %}
+				// Get the context of the canvas element we want to select
+				var subDisease= document.getElementById("subDisease222").getContext("2d");
+				new Chart(subDisease).Pie(pieData123);
+			
+		});
+		
+		</script>
+	</div>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Registration ID</th>
+				{% if family_id == 0%}
+					<th>Family ID</th>
+				{% endif%}
+				{% if institute_id == 0%}
+					<th>Institute ID</th>
+				{% endif%}
+				<!--<th>Patient ID</th>-->
+				<th>Sample ID</th>
+				<th>Status</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% if PatientGeneralInfoDetial %}
+				{% for result in PatientGeneralInfoDetial %}
+					<tr>
+						<td><a href="{% url 'ophthalmology:view_new_patient' result.id %}">{{result.registration_id}}</a></td>
+						{% if family_id == 0%}
+							<td><a href="?family_id={{ result.family_id }}">{{result.family_id}}</a></td>
+						{% endif %}
+						{% if institute_id == 0%}
+							<td><a href="?institute_id={{ result.institute.id }}">{{result.institute.institute_id}}</a></td>
+						{% endif %}
+						<td>{{result.sample_id}}</td>
+						<td>
+							{% if result.is_draft == True %}
+								<span class="label label-success">Live</span>
+							{% else %}
+								<span class="label label-warning">In Draft</span>
+							{% endif %}
+						</td>
+					</tr>
+				{% endfor %}
+			{% else %}
+				<tr>
+					<td colspan="4" style="text-align:center">Record not found.</td>
+				</tr>
+			{% endif %}
+		</tbody>
+	</table>
+</div>
+
+

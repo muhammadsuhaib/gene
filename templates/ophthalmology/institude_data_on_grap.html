@@ -1,0 +1,45 @@
+<table class="table">
+	<thead>
+		<tr>
+			<th>Registration ID</th>
+			{% if family_id == 0%}
+				<th>Family ID</th>
+			{% endif%}
+			{% if institute_id == 0%}
+				<th>Institute ID</th>
+			{% endif%}
+			<!--<th>Patient ID</th>-->
+			<th>Sample ID</th>
+			<th>Status</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% if PatientGeneralInfoDetial %}
+			{% for result in PatientGeneralInfoDetial %}
+				<tr>
+					<td><a href="{% url 'ophthalmology:view_new_patient' result.id %}">{{result.registration_id}}</a></td>
+					{% if family_id == 0%}
+						<td><a href="?family_id={{ result.family_id }}">{{result.family_id}}</a></td>
+					{% endif %}
+					{% if institute_id == 0%}
+						<td><a href="?institute_id={{ result.institute.id }}">{{result.institute.institute_id}}</a></td>
+					{% endif %}
+					<td>{{result.sample_id}}</td>
+					<td>
+						{% if result.is_draft == True %}
+							<span class="label label-success">Live</span>
+						{% else %}
+							<span class="label label-warning">In Draft</span>
+						{% endif %}
+					</td>
+				</tr>
+			{% endfor %}
+		{% else %}
+			<tr>
+				<td colspan="4" style="text-align:center">Record not found.</td>
+			</tr>
+		{% endif %}
+	</tbody>
+</table>
+
+
